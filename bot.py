@@ -48,8 +48,11 @@ class Bot:
 
         # If we make the pattern too sparse, it just dies quickly
         xy = self.rng.integers(0, 12, size=(2, 100))
+        # self.pattern = Positions(
+        #     x=xy[1] + patch_size[1] // 2, y=xy[0] + patch_size[0] // 2
+        # )
         self.pattern = Positions(
-            x=xy[1] + patch_size[1] // 2, y=xy[0] + patch_size[0] // 2
+            x=np.array([0, 1, 1, 1, 2, 2, 3, 4, 5, 5]) + patch_size[1] // 2, y=np.array([6, 4, 6, 7, 4, 6, 4, 2, 0, 2]) + patch_size[0] // 2
         )
         # The pattern can also be just an image (0=white, 1=black)
         # self.pattern = "mypattern.png"
