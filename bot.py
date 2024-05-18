@@ -47,16 +47,16 @@ class Bot:
         self.rng = np.random.default_rng(SEED)
 
         # If we make the pattern too sparse, it just dies quickly
-        xy = self.rng.integers(0, 12, size=(2, 100))
+        xy = self.rng.integers(0, 12, size=(2, 10))
+        print(xy)
         self.pattern = Positions(
             x=xy[1] + patch_size[1] // 2, y=xy[0] + patch_size[0] // 2
         )
         # The pattern can also be just an image (0=white, 1=black)
         # self.pattern = "mypattern.png"
 
-        self.options = [self.glider, self.loafer, self.paul_callahan_infinite, self.lwss, self.space_rake]
-        # self.weights = [7, 1, 50, 80]
-        self.weights = [10, 5, 10, 20, 2]
+        self.options = [self.glider, self.loafer, self.paul_callahan_infinite, self.lwss]
+        self.weights = [10, 5, 10, 20]
         self.next_choice = self.space_rake
 
     def glider(self, patch: np.ndarray, tokens: int) -> Optional[Positions]:
