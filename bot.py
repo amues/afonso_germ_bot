@@ -64,7 +64,7 @@ class Bot:
             return None
         else:
             empty_regions = helpers.find_empty_regions(patch, (3, 3))
-            nregions = len(empty_regions)uuuuuu
+            nregions = len(empty_regions)
             if nregions == 0:
                 return None
             ind = self.rng.integers(0, nregions)
