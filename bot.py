@@ -48,7 +48,6 @@ class Bot:
 
         # If we make the pattern too sparse, it just dies quickly
         xy = self.rng.integers(0, 12, size=(2, 100))
-        print(xy)
         self.pattern = Positions(
             x=xy[1] + patch_size[1] // 2, y=xy[0] + patch_size[0] // 2
         )
