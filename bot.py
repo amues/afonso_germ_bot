@@ -1,12 +1,13 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
+import random
 from typing import Optional, Tuple
 
 import numpy as np
 
 from cholerama import Positions, helpers
 
-AUTHOR = "YeastieBoys"  # This is your team name
+AUTHOR = "Histeria"  # This is your team name
 SEED = None  # Set this to a value to make runs reproducible
 
 
@@ -19,11 +20,11 @@ class Bot:
     """
 
     def __init__(
-        self,
-        number: int,
-        name: str,
-        patch_location: Tuple[int, int],
-        patch_size: Tuple[int, int],
+            self,
+            number: int,
+            name: str,
+            patch_location: Tuple[int, int],
+            patch_size: Tuple[int, int],
     ):
         """
         Parameters:
@@ -53,8 +54,206 @@ class Bot:
         # The pattern can also be just an image (0=white, 1=black)
         # self.pattern = "mypattern.png"
 
+        self.options = [self.glider, self.loafer, self.paul_callahan_infinite, self.lwss, self.space_rake]
+        # self.weights = [7, 1, 50, 80]
+        self.weights = [10, 5, 10, 20, 2]
+        self.next_choice = self.space_rake
+
+    def glider(self, patch: np.ndarray, tokens: int) -> Optional[Positions]:
+        if tokens < 5:
+            return None
+        else:
+            empty_regions = helpers.find_empty_regions(patch, (3, 3))
+            nregions = len(empty_regions)
+            if nregions == 0:
+                return None
+            ind = self.rng.integers(0, nregions)
+            x = np.array([1, 2, 0, 1, 2]) + empty_regions[ind, 1]
+            y = np.array([2, 1, 0, 0, 0]) + empty_regions[ind, 0]
+            return Positions(x=x, y=y)
+
+    def loafer(self, patch: np.ndarray, tokens: int) -> Optional[Positions]:
+        if tokens < 20:
+            return None
+        else:
+            empty_regions = helpers.find_empty_regions(patch, (9, 9))
+            nregions = len(empty_regions)
+            if nregions == 0:
+                return None
+            ind = self.rng.integers(0, nregions)
+            x = np.array([0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 4, 5, 5, 5, 6, 7, 8, 8]) + empty_regions[ind, 1]
+            y = np.array([1, 2, 5, 7, 8, 0, 3, 6, 7, 1, 3, 2, 8, 6, 7, 8, 5, 6, 7, 8]) + empty_regions[ind, 0]
+            return Positions(x=x, y=y)
+
+    def paul_callahan_infinite(self, patch: np.ndarray, tokens: int) -> Optional[Positions]:
+        if tokens < 10:
+            return None
+        else:
+            empty_regions = helpers.find_empty_regions(patch, (8, 8))
+            nregions = len(empty_regions)
+            if nregions == 0:
+                return None
+            ind = self.rng.integers(0, nregions)
+            x = np.array([0, 1, 1, 1, 2, 2, 3, 4, 5, 5]) + empty_regions[ind, 1]
+            y = np.array([6, 4, 6, 7, 4, 6, 4, 2, 0, 2]) + empty_regions[ind, 0]
+            return Positions(x=x, y=y)
+
+    def lwss(self, patch: np.ndarray, tokens: int) -> Optional[Positions]:
+        if tokens < 9:
+            return None
+        else:
+            empty_regions = helpers.find_empty_regions(patch, (5, 5))
+            nregions = len(empty_regions)
+            if nregions == 0:
+                return None
+            ind = self.rng.integers(0, nregions)
+            x = np.array([0, 0, 1, 2, 2, 3, 3, 3, 3]) + empty_regions[ind, 1]
+            y = np.array([1, 4, 0, 0, 4, 0, 1, 2, 3]) + empty_regions[ind, 0]
+            return Positions(x=x, y=y)
+
+    def space_rake(self, patch: np.ndarray, tokens: int) -> Optional[Positions]:
+        if tokens < 65:
+            return None
+        else:
+            empty_regions = helpers.find_empty_regions(patch, (22, 22))
+            nregions = len(empty_regions)
+            if nregions == 0:
+                return None
+            ind = self.rng.integers(0, nregions)
+            x = np.array([0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          1,
+                          1,
+                          1,
+                          1,
+                          1,
+                          1,
+                          2,
+                          2,
+                          2,
+                          2,
+                          2,
+                          3,
+                          3,
+                          3,
+                          3,
+                          5,
+                          6,
+                          6,
+                          6,
+                          6,
+                          7,
+                          7,
+                          7,
+                          8,
+                          8,
+                          8,
+                          8,
+                          8,
+                          8,
+                          8,
+                          9,
+                          9,
+                          9,
+                          9,
+                          9,
+                          9,
+                          9,
+                          9,
+                          10,
+                          10,
+                          10,
+                          14,
+                          14,
+                          14,
+                          14,
+                          15,
+                          15,
+                          15,
+                          15,
+                          16,
+                          16,
+                          17,
+                          17,
+                          17,
+                          17,
+                          18,
+                          18,
+                          18,
+                          18]) + empty_regions[ind, 1]
+            y = np.array([11,
+                          12,
+                          18,
+                          19,
+                          20,
+                          21,
+                          9,
+                          10,
+                          12,
+                          13,
+                          17,
+                          21,
+                          9,
+                          10,
+                          11,
+                          12,
+                          21,
+                          10,
+                          11,
+                          17,
+                          20,
+                          8,
+                          7,
+                          8,
+                          17,
+                          18,
+                          6,
+                          16,
+                          19,
+                          7,
+                          8,
+                          9,
+                          10,
+                          11,
+                          16,
+                          19,
+                          8,
+                          9,
+                          10,
+                          11,
+                          15,
+                          16,
+                          18,
+                          19,
+                          11,
+                          16,
+                          17,
+                          18,
+                          19,
+                          20,
+                          21,
+                          0,
+                          3,
+                          17,
+                          21,
+                          4,
+                          21,
+                          0,
+                          4,
+                          17,
+                          20,
+                          1,
+                          2,
+                          3,
+                          4]) + empty_regions[ind, 0]
+            return Positions(x=x, y=y)
+
     def iterate(
-        self, iteration: int, board: np.ndarray, patch: np.ndarray, tokens: int
+            self, iteration: int, board: np.ndarray, patch: np.ndarray, tokens: int
     ) -> Optional[Positions]:
         """
         This method will be called by the game engine on each iteration.
@@ -74,14 +273,8 @@ class Bot:
         -------
         An object containing the x and y coordinates of the new cells.
         """
-        if tokens >= 5:
-            # Pick a random empty region of size 3x3 inside my patch
-            empty_regions = helpers.find_empty_regions(patch, (3, 3))
-            nregions = len(empty_regions)
-            if nregions == 0:
-                return None
-            # Make a glider
-            ind = self.rng.integers(0, nregions)
-            x = np.array([1, 2, 0, 1, 2]) + empty_regions[ind, 1]
-            y = np.array([2, 1, 0, 0, 0]) + empty_regions[ind, 0]
-            return Positions(x=x, y=y)
+        r = self.next_choice(patch, tokens)
+        if r is not None:
+            self.next_choice = random.choices(self.options, self.weights)[0]
+
+        return r
